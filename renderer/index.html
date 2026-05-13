@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="CSP" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'">
+  <title>番茄钟</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- 标题栏（可拖拽） -->
+  <div class="titlebar">
+    <div class="titlebar-controls">
+      <button class="title-btn" id="btn-hide" title="隐藏到托盘">─</button>
+      <button class="title-btn" id="btn-close" title="退出">✕</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- 模式选择 -->
+    <div class="mode-tabs">
+      <button class="mode-tab active" data-mode="pomodoro">专注</button>
+      <button class="mode-tab" data-mode="shortBreak">短休息</button>
+      <button class="mode-tab" data-mode="longBreak">长休息</button>
+    </div>
+
+    <!-- 计时器圆环 -->
+    <div class="timer-ring">
+      <svg class="ring-svg" viewBox="0 0 220 220">
+        <circle class="ring-bg" cx="110" cy="110" r="100" />
+        <circle class="ring-progress" cx="110" cy="110" r="100" />
+      </svg>
+      <div class="timer-center">
+        <div class="timer-display" id="timerDisplay">25:00</div>
+        <div class="timer-status" id="timerStatus">准备就绪</div>
+        <div class="selected-task-name" id="selectedTaskDisplay"></div>
+      </div>
+    </div>
+
+    <!-- 控制按钮 -->
+    <div class="controls">
+      <button class="ctrl-btn primary" id="btnStart">开始</button>
+      <button class="ctrl-btn" id="btnReset">重置</button>
+    </div>
+
+    <!-- 设置 -->
+    <div class="settings-row">
+      <label class="setting-item">
+        <span>专注</span>
+        <input type="number" class="setting-input" id="inputPomodoro" value="25" min="1" max="120">
+        <span>分</span>
+      </label>
+      <label class="setting-item">
+        <span>短休</span>
+        <input type="number" class="setting-input" id="inputShortBreak" value="5" min="1" max="60">
+        <span>分</span>
+      </label>
+      <label class="setting-item">
+        <span>长休</span>
+        <input type="number" class="setting-input" id="inputLongBreak" value="15" min="1" max="120">
+        <span>分</span>
+      </label>
+    </div>
+
+    <!-- 今日统计 -->
+    <div class="stats" id="stats">
+      今日完成 <span class="stat-count" id="completedCount">0</span> 个番茄
+    </div>
+
+    <!-- 任务列表 -->
+    <div class="task-section">
+      <div class="task-header">
+        <span>任务列表</span>
+        <span class="task-count" id="taskCount">0</span>
+      </div>
+      <div class="task-input-row">
+        <input type="text" class="task-input" id="taskInput" placeholder="添加一个任务..." maxlength="100">
+        <button class="task-add-btn" id="btnAddTask">+</button>
+      </div>
+      <ul class="task-list" id="taskList"></ul>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <button class="footer-btn" id="btnHistory">📊 历史</button>
+      <label class="ontop-toggle">
+        <input type="checkbox" id="chkOntop" checked>
+        <span>置顶</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- 历史面板 overlay -->
+  <div class="history-overlay" id="historyOverlay">
+    <div class="history-panel">
+      <div class="history-header">
+        <span class="history-title">历史记录</span>
+        <button class="history-close" id="btnHistoryClose">✕</button>
+      </div>
+      <div class="history-stats-row">
+        <div class="history-stat-card">
+          <div class="history-stat-num" id="todayCount">0</div>
+          <div class="history-stat-label">今日番茄</div>
+        </div>
+        <div class="history-stat-card">
+          <div class="history-stat-num" id="todayMinutes">0</div>
+          <div class="history-stat-label">今日分钟</div>
+        </div>
+        <div class="history-stat-card">
+          <div class="history-stat-num" id="monthCount">0</div>
+          <div class="history-stat-label">本月番茄</div>
+        </div>
+        <div class="history-stat-card">
+          <div class="history-stat-num" id="monthMinutes">0</div>
+          <div class="history-stat-label">本月分钟</div>
+        </div>
+      </div>
+      <div class="history-group-list" id="historyGroupList">
+        <!-- 按日期分组渲染 -->
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
